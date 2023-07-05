@@ -22,7 +22,7 @@ jobs:
         
       - name: Push Docker Image
         run: |
-          echo "Password@123" | docker login -u "sidwar" --password-stdin
+          docker login -u sidwar -p Password@123
           docker push myapp:${{ github.sha }}
 
       - name: Vulnerability Scanning
