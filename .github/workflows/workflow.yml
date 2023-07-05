@@ -40,6 +40,10 @@ jobs:
 #           # Use Docker Content Trust (DCT) for image integrity verification
 #           export DOCKER_CONTENT_TRUST=1
 #           docker pull myapp:${{ github.sha }}
+      - name: Install GitGuardian CLI
+        run: |
+          # Install GitGuardian CLI
+          pip install gitguardian
 
       - name: Secrets Scanning
         run: |
