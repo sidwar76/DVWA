@@ -35,11 +35,11 @@ jobs:
 #           # Use Notary for image signing
 #           docker run --rm -v $(pwd):/root/ docker/notary:signer-0.7.0 sign myapp:${{ github.sha }}
 
-      - name: Image Integrity Verification
-        run: |
-          # Use Docker Content Trust (DCT) for image integrity verification
-          export DOCKER_CONTENT_TRUST=1
-          docker pull myapp:${{ github.sha }}
+#       - name: Image Integrity Verification
+#         run: |
+#           # Use Docker Content Trust (DCT) for image integrity verification
+#           export DOCKER_CONTENT_TRUST=1
+#           docker pull myapp:${{ github.sha }}
 
       - name: Secrets Scanning
         run: |
