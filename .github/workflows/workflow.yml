@@ -28,7 +28,7 @@ jobs:
       - name: Image Signing
         run: |
           # Use Notary for image signing
-          docker run --rm -v $(pwd):/root/ notary:latest sign myapp:${{ github.sha }}
+          docker run --rm -v $(pwd):/root/ docker/notary:latest sign myapp:${{ github.sha }}
 
       - name: Image Integrity Verification
         run: |
