@@ -30,10 +30,10 @@ jobs:
           # Log in to Docker Hub or the desired container registry
           docker login -u sidwar -p Password@123
 
-      - name: Image Signing 
-        run: |
-          # Use Notary for image signing
-          docker run --rm -v $(pwd):/root/ docker/notary:signer-0.7.0 sign myapp:${{ github.sha }}
+#       - name: Image Signing 
+#         run: |
+#           # Use Notary for image signing
+#           docker run --rm -v $(pwd):/root/ docker/notary:signer-0.7.0 sign myapp:${{ github.sha }}
 
       - name: Image Integrity Verification
         run: |
