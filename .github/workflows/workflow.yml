@@ -30,7 +30,7 @@ jobs:
       - name: Vulnerability Scanning
         run: |
           # Use Trivy for vulnerability scanning
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image myapp:${{ github.sha }}
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image sidwar/myapp:${{ github.sha }}
 
 #       - name: Runtime Protection and Monitoring
 #         run: |
@@ -48,7 +48,7 @@ jobs:
           export DOCKER_CONTENT_TRUST=1
 
           # Sign the Docker image
-          docker trust sign myapp:${{ github.sha }}
+          docker trust sign sidwar/myapp:${{ github.sha }}
 
 
       - name: Image Integrity Verification
@@ -57,7 +57,7 @@ jobs:
           export DOCKER_CONTENT_TRUST=1
 
           # Pull the Docker image with DCT enabled
-          docker pull myapp:${{ github.sha }}
+          docker pull sidwar/myapp:${{ github.sha }}
 #       - name: Install GitGuardian CLI
 #         run: |
 #           # Install GitGuardian CLI
