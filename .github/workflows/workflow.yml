@@ -56,6 +56,9 @@ jobs:
             chmod +x cosign
             sudo mv cosign /usr/local/bin/cosign
 
+            # Log in to Docker Hub or the desired container registry
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
             # Generate key pair
             cosign generate-key-pair
 
