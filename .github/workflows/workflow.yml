@@ -22,6 +22,7 @@ jobs:
         
       - name: Push Docker Image
         run: |
+          docker logout
           docker login -u sidwar -p Password@123
           docker push myapp:${{ github.sha }}
 
