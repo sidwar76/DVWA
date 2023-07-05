@@ -25,6 +25,11 @@ jobs:
 #           # Use Sysdig Secure for runtime protection and monitoring
 #           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e ACCESS_KEY=ac894ca7-21a2-41f2-8f69-dc1ed1d4eac6 -e SECRET_KEY=97b7a21c-2987-48da-9489-905c05b51349 sysdig/secure-inline-scan:latest myapp:${{ github.sha }}
 
+      - name: Docker Login
+        run: |
+          # Log in to Docker Hub or the desired container registry
+          docker login -u sidwar -p Password@123
+
       - name: Image Signing 
         run: |
           # Use Notary for image signing
