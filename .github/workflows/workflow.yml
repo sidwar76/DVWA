@@ -42,13 +42,22 @@ jobs:
 #         run: |
 #           # Use Notary for image signing
 #           docker run --rm -v $(pwd):/root/ docker/notary:signer-0.7.0 sign myapp:${{ github.sha }}
-      - name: Image Signing
+      - name: Verify and Sign Image
         run: |
-          # Enable Docker Content Trust
-          export DOCKER_CONTENT_TRUST=1
-
-          # Sign the Docker image
-          docker trust sign sidwar/myapp:${{ github.sha }}
+          # Verify if the Docker image is signed
+          if docker trust inspect --pretty myapp:${{ github.sha }} &> /dev/null; then
+            echo "Image is already signed."
+          else
+            echo "Image is not signed. Signing the image using cosign..."
+            
+            # Install cosign
+            curl -sSL "https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64" -o cosign
+            chmod +x cosign
+            sudo mv cosign /usr/local/bin/cosign
+            echo "${{ secrets.PRIVATE }}" > private.key
+            # Sign the image using cosign
+            cosign sign -key private.key myapp:${{ github.sha }}
+          fi
 
 
       - name: Image Integrity Verification
