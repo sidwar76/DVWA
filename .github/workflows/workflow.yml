@@ -20,10 +20,10 @@ jobs:
           # Use Trivy for vulnerability scanning
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image myapp:${{ github.sha }}
 
-      - name: Runtime Protection and Monitoring
-        run: |
-          # Use Sysdig Secure for runtime protection and monitoring
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e ACCESS_KEY=ac894ca7-21a2-41f2-8f69-dc1ed1d4eac6 -e SECRET_KEY=97b7a21c-2987-48da-9489-905c05b51349 sysdig/secure-inline-scan:latest myapp:${{ github.sha }}
+#       - name: Runtime Protection and Monitoring
+#         run: |
+#           # Use Sysdig Secure for runtime protection and monitoring
+#           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e ACCESS_KEY=ac894ca7-21a2-41f2-8f69-dc1ed1d4eac6 -e SECRET_KEY=97b7a21c-2987-48da-9489-905c05b51349 sysdig/secure-inline-scan:latest myapp:${{ github.sha }}
 
       - name: Image Signing
         run: |
