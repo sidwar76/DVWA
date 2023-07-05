@@ -1,0 +1,47 @@
+name: DevSecOps Pipeline
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        run: docker build -t myapp:${{ github.sha }} .
+
+      - name: Vulnerability Scanning
+        run: |
+          # Use Trivy for vulnerability scanning
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image myapp:${{ github.sha }}
+
+      - name: Runtime Protection and Monitoring
+        run: |
+          # Use Sysdig Secure for runtime protection and monitoring
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e ACCESS_KEY=<sysdig_access_key> -e SECRET_KEY=<sysdig_secret_key> sysdig/secure-inline-scan:latest myapp:${{ github.sha }}
+
+      - name: Image Signing
+        run: |
+          # Use Notary for image signing
+          docker run --rm -v $(pwd):/root/ notary:latest sign myapp:${{ github.sha }}
+
+      - name: Image Integrity Verification
+        run: |
+          # Use Docker Content Trust (DCT) for image integrity verification
+          export DOCKER_CONTENT_TRUST=1
+          docker pull myapp:${{ github.sha }}
+
+      - name: Secrets Scanning
+        run: |
+          # Use GitGuardian for secrets scanning
+          gitguardian scan --path .
+
+      - name: Container Configuration Security
+        run: |
+          # Use kube-bench for container configuration security
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/host aquasec/kube-bench:latest --config /host/myapp.yaml
