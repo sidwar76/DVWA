@@ -69,12 +69,7 @@ jobs:
       - name: Install TruffleHog Dependencies
         run: pip install trufflehog
       - name: Run TruffleHog
-        run: trufflehog --repo_path .
-
-
-
-           
-
+        run: trufflehog https://github.com/sidwar76/DVWA.git
 
 
 #       - name: Image Integrity Verification
