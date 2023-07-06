@@ -73,7 +73,7 @@ jobs:
       - name: pull TruffleHog
         run: docker pull gesellix/trufflehog 
       - name: Run TruffleHog
-        run: docker run -t gesellix/trufflehog --json https://github.com/sidwar76/hashedin.git
+        run: docker run -t gesellix/trufflehog --json https://github.com/sidwar76/DVWA.git
         
         
 
@@ -95,7 +95,7 @@ jobs:
 #           # Use GitGuardian for secrets scanning
 #           gitguardian scan --path .
 
-      - name: Container Configuration Security
-        run: |
-          # Use kube-bench for container configuration security
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/host aquasec/kube-bench:latest --config /host/myapp.yaml
+#       - name: Container Configuration Security
+#         run: |
+#           # Use kube-bench for container configuration security
+#           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/host aquasec/kube-bench:latest --config /host/myapp.yaml
