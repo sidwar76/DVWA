@@ -69,7 +69,7 @@ jobs:
       - name: Install TruffleHog Dependencies
         run: pip install trufflehog
       - name: Run TruffleHog
-        run: trufflehog https://github.com/sidwar76/hashedin.git
+        run: sudo trufflehog https://github.com/sidwar76/hashedin.git
 
 
 #       - name: Image Integrity Verification
