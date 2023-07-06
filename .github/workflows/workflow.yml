@@ -21,7 +21,7 @@ jobs:
       - name: Docker Login
         run: |
           # Log in to Docker Hub or the desired container registry
-          docker login -u sidwar -p Password@123
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker Image
         run: |
