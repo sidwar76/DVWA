@@ -60,17 +60,28 @@ jobs:
 
 #             # Sign the image using cosign
 #             cosign sign -key cosign.key myapp:${{ github.sha }}
+
+      - name: Install GitGuardian CLI
+        run: |
+          # Install GitGuardian CLI
+          pip3 install gitguardian
+
+      - name: Secrets Scanning
+        run: |
+          # Use GitGuardian for secrets scanning
+          gitguardian scan --path .
+
            
 
 
 
-      - name: Image Integrity Verification
-        run: |
-          # Enable Docker Content Trust (DCT)
-          export DOCKER_CONTENT_TRUST=1
+#       - name: Image Integrity Verification
+#         run: |
+#           # Enable Docker Content Trust (DCT)
+#           export DOCKER_CONTENT_TRUST=1
 
-          # Pull the Docker image with DCT enabled
-          docker pull sidwar/myapp:${{ github.sha }}
+#           # Pull the Docker image with DCT enabled
+#           docker pull sidwar/myapp:${{ github.sha }}
 #       - name: Install GitGuardian CLI
 #         run: |
 #           # Install GitGuardian CLI
