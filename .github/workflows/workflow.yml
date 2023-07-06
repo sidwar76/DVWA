@@ -66,10 +66,16 @@ jobs:
 #           # Use GitGuardian for secrets scanning
 #           docker run --rm -v $(pwd):/scan gitguardian/cli scan --path /scan
 
-      - name: Install TruffleHog Dependencies
-        run: pip install trufflehog
+#       - name: Install TruffleHog Dependencies
+#         run: pip install trufflehog
+#       - name: Run TruffleHog
+#         run: sudo trufflehog https://github.com/sidwar76/hashedin.git
+      - name: pull TruffleHog
+        run: docker pull gesellix/trufflehog 
       - name: Run TruffleHog
-        run: sudo trufflehog https://github.com/sidwar76/hashedin.git
+        run: docker run -t gesellix/trufflehog --json https://github.com/sidwar76/hashedin.git > trufflehog
+        
+        
 
 
 #       - name: Image Integrity Verification
