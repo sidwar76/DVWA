@@ -1,4 +1,4 @@
-name: DevSecOps Pipeline
+name: DevSecOps Pipeline 2
 on:
   push:
     branches:
@@ -32,9 +32,9 @@ jobs:
           # Use Trivy for vulnerability scanning and capture the output in trivy-report.json
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image sidwar/myapp:${{ github.sha }} > trivy-report.json
         # Publish the vulnerability scanning report as an artifact
-        - name: Publish Vulnerability Scanning Report
-          uses: actions/upload-artifact@v2
-          with:
+      - name: Publish Vulnerability Scanning Report
+        uses: actions/upload-artifact@v2
+        with:
             name: vulnerability-report
             path: ./trivy-report.json
 
@@ -47,9 +47,9 @@ jobs:
             echo "Image is not signed. Signing the image using cosign..." > sign-image-report.txt
           fi
         # Publish the sign image report as an artifact
-        - name: Publish Sign Image Report
-          uses: actions/upload-artifact@v2
-          with:
+      - name: Publish Sign Image Report
+        uses: actions/upload-artifact@v2
+        with:
             name: sign-image-report
             path: ./sign-image-report.txt
 
@@ -61,8 +61,8 @@ jobs:
           # Run TruffleHog and capture the output in trufflehog-report.json
           docker run -t gesellix/trufflehog --json https://github.com/sidwar76/DVWA.git > trufflehog-report.json
         # Publish the TruffleHog report as an artifact
-        - name: Publish TruffleHog Report
-          uses: actions/upload-artifact@v2
-          with:
+      - name: Publish TruffleHog Report
+        uses: actions/upload-artifact@v2
+        with:
             name: trufflehog-report
             path: ./trufflehog-report.json
