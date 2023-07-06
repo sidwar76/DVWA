@@ -61,15 +61,11 @@ jobs:
 #             # Sign the image using cosign
 #             cosign sign -key cosign.key myapp:${{ github.sha }}
 
-      - name: Install GitGuardian CLI
-        run: |
-          # Install GitGuardian CLI
-          pip3 install gitguardian
-
       - name: Secrets Scanning
         run: |
           # Use GitGuardian for secrets scanning
-          gitguardian scan --path .
+          docker run --rm -v $(pwd):/scan gitguardian/cli scan --path /scan
+
 
            
 
