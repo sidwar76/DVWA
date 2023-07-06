@@ -61,10 +61,16 @@ jobs:
 #             # Sign the image using cosign
 #             cosign sign -key cosign.key myapp:${{ github.sha }}
 
-      - name: Secrets Scanning
-        run: |
-          # Use GitGuardian for secrets scanning
-          docker run --rm -v $(pwd):/scan gitguardian/cli scan --path /scan
+#       - name: Secrets Scanning
+#         run: |
+#           # Use GitGuardian for secrets scanning
+#           docker run --rm -v $(pwd):/scan gitguardian/cli scan --path /scan
+
+      - name: Install TruffleHog Dependencies
+        run: pip install trufflehog
+      - name: Run TruffleHog
+        run: trufflehog --repo-path .
+
 
 
            
