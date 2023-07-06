@@ -1,0 +1,68 @@
+name: DevSecOps Pipeline
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        run: docker build -t sidwar/myapp:${{ github.sha }} .
+
+      - name: Docker Logout
+        run: docker logout
+
+      - name: Docker Login
+        run: |
+          # Log in to Docker Hub or the desired container registry
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker Image
+        run: |
+          docker push sidwar/myapp:${{ github.sha }}
+
+      - name: Vulnerability Scanning
+        run: |
+          # Use Trivy for vulnerability scanning and capture the output in trivy-report.json
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image sidwar/myapp:${{ github.sha }} > trivy-report.json
+        # Publish the vulnerability scanning report as an artifact
+        - name: Publish Vulnerability Scanning Report
+          uses: actions/upload-artifact@v2
+          with:
+            name: vulnerability-report
+            path: ./trivy-report.json
+
+      - name: Verify and Sign Image
+        run: |
+          # Verify if the Docker image is signed
+          if docker trust inspect --pretty myapp:${{ github.sha }} &> /dev/null; then
+            echo "Image is already signed."
+          else
+            echo "Image is not signed. Signing the image using cosign..." > sign-image-report.txt
+          fi
+        # Publish the sign image report as an artifact
+        - name: Publish Sign Image Report
+          uses: actions/upload-artifact@v2
+          with:
+            name: sign-image-report
+            path: ./sign-image-report.txt
+
+      - name: pull TruffleHog
+        run: docker pull gesellix/trufflehog
+
+      - name: Run TruffleHog
+        run: |
+          # Run TruffleHog and capture the output in trufflehog-report.json
+          docker run -t gesellix/trufflehog --json https://github.com/sidwar76/DVWA.git > trufflehog-report.json
+        # Publish the TruffleHog report as an artifact
+        - name: Publish TruffleHog Report
+          uses: actions/upload-artifact@v2
+          with:
+            name: trufflehog-report
+            path: ./trufflehog-report.json
