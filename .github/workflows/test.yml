@@ -30,7 +30,9 @@ jobs:
       - name: Vulnerability Scanning
         run: |
           # Use Trivy for vulnerability scanning and capture the output in trivy-report.json
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image sidwar/myapp:${{ github.sha }} > trivy-report.json
+          #docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image sidwar/myapp:${{ github.sha }} > trivy-report.json
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/root/ aquasec/trivy:latest image --vuln-type="os,library" --output="trivy-report.json" sidwar/myapp
+
         # Publish the vulnerability scanning report as an artifact
       - name: Publish Vulnerability Scanning Report
         uses: actions/upload-artifact@v2
