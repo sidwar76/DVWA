@@ -1,0 +1,23 @@
+[
+    {
+      "regex": "(password|api_key|secret)",
+      "name": "Sensitive Information",
+      "severity": "HIGH"
+    },
+    {
+      "regex": "(access_key|private_key)",
+      "name": "Access Keys",
+      "severity": "HIGH"
+    },
+    {
+      "regex": "(db_username|db_password)",
+      "name": "Database Credentials",
+      "severity": "MEDIUM"
+    },
+    {
+      "file": "(\\.env|config\\.json)",
+      "name": "Configuration Files",
+      "severity": "MEDIUM"
+    }
+  ]
+  
