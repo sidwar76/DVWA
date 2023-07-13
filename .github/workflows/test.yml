@@ -62,10 +62,16 @@ jobs:
       - name: pull TruffleHog
         run: docker pull gesellix/trufflehog
 
-      - name: Run TruffleHog
+#       - name: Run TruffleHog
+#         run: |
+#           # Run TruffleHog and capture the output in trufflehog-report.json
+#           docker run -t gesellix/trufflehog --json --rules $GITHUB_WORKSPACE/rules.json https://github.com/sidwar76/DVWA.git > trufflehog-report.json
+          
+      - name: Run TruffleHog and capture the output
         run: |
-          # Run TruffleHog and capture the output in trufflehog-report.json
-          docker run -t gesellix/trufflehog --json --rules $GITHUB_WORKSPACE/rules.json https://github.com/sidwar76/DVWA.git > trufflehog-report.json
+          docker run -t -v $PWD:/src gesellix/trufflehog --json --rules /src/rules.json https://github.com/sidwar76/DVWA.git > trufflehog-report.json
+        shell: bash
+
         # Publish the TruffleHog report as an artifact
       - name: Publish TruffleHog Report
         uses: actions/upload-artifact@v2
