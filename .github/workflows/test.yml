@@ -61,6 +61,8 @@ jobs:
 
       - name: pull TruffleHog
         run: docker pull gesellix/trufflehog
+      - name: debugging 
+        run: ls /src/
 
 #       - name: Run TruffleHog
 #         run: |
