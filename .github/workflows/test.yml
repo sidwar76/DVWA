@@ -12,9 +12,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
         
-      - name: Use rules.json
-        run: |
-          cp rules.json $GITHUB_WORKSPACE/rules.json
+#       - name: Use rules.json
+#         run: |
+#           cp rules.json $GITHUB_WORKSPACE/rules.json
 
       - name: Build Docker Image
         run: docker build -t sidwar/myapp:${{ github.sha }} .
