@@ -71,7 +71,7 @@ jobs:
           
       - name: Run TruffleHog and capture the output
         run: |
-          docker run -t -v $PWD:/src gesellix/trufflehog --json --rules $GITHUB_WORKSPACE/rules.json https://github.com/sidwar76/DVWA.git > trufflehog-report.json
+          docker run -t -v $PWD:/src gesellix/trufflehog --json --rules $GITHUB_WORKSPACE/rules.json https://github.com/sidwar76/DVWA.git
         shell: bash
 
         # Publish the TruffleHog report as an artifact
