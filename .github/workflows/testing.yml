@@ -11,9 +11,13 @@ jobs:
     steps:
       - name: TruffleHog Scan
         run: |
-          docker run -t gesellix/trufflehog --json https://github.com/sidwar76/DVWA.git > trufflehog-report.json
-        # Publish the TruffleHog report as an artifact
-          
+          docker run -t gesellix/trufflehog --json \
+            --regex "(password|api_key|secret)" \
+            --regex "(access_key|private_key)" \
+            --regex "(db_username|db_password)" \
+            --file "\\.env" \
+            --file "config\\.json" \
+            https://github.com/sidwar76/DVWA.git > trufflehog-report.json
 
       - name: Upload TruffleHog Scan Report
         if: always()
