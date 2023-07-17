@@ -1,4 +1,4 @@
-name: gitleaks
+name: Gitleaks Scan
 on: [pull_request, push, workflow_dispatch]
 
 jobs:
@@ -7,26 +7,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Extract Owner and Repo
-        id: extract
-        run: |
-          REPO_URL='https://github.com/sidwar76/hashedin.git'
-          REPO_NAME=$(basename $REPO_URL .git)
-          OWNER=$(echo $REPO_URL | sed 's/.*github.com\///' | sed 's/\/.*//')
-          echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
-          echo "OWNER=$OWNER" >> $GITHUB_ENV
+        uses: actions/checkout@v2
 
       - name: Run Gitleaks Scan
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          config-path: gitleaks.toml
-          repo: ${{ env.OWNER }}/${{ env.REPO_NAME }}
-        env:
-          GITHUB_TOKEN: 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
+        run: |
+          # Replace 'https://github.com/owner/repo.git' with the actual repository URL
+          REPO_URL='https://github.com/sidwar76/hashedin.git'
+          CUSTOM_RULES='{
+            "rules": [
+              {
+                "regex": "(password|api_key|secret)",
+                "description": "Potential sensitive information",
+                "tags": ["high_severity"]
+              },
+              {
+                "regex": "(access_key|private_key)",
+                "description": "Potential access keys",
+                "tags": ["high_severity"]
+              },
+              {
+                "file": "\\.env|config\\.json",
+                "description": "Potential configuration files",
+                "tags": ["medium_severity"]
+              }
+            ]
+          }'
 
-          
+          # Save custom rules to a temporary file
+          echo "$CUSTOM_RULES" > custom-rules.json
+
+          # Run Gitleaks scan with custom rules and the repository URL
+          gitleaks --path=/github/workspace --config=custom-rules.json --report=gitleaks-report.json $REPO_URL
+
+      - name: Upload Gitleaks Scan Report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: gitleaks-scan-report
+          path: gitleaks-report.json
+
 
