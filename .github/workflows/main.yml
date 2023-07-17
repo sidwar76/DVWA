@@ -58,7 +58,7 @@ jobs:
 
       - name: TruffleHog Scan
         run: |
-          trufflehog . --json 
+          trufflehog . --json > trufflehog-report.json
 
       - name: Upload TruffleHog Scan Report
         if: always()
