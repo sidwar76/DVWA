@@ -47,6 +47,13 @@ jobs:
               }
             ]
           }' > $GITHUB_WORKSPACE/trufflehog-rules.json
+      - name: List Repository Files
+        run: ls $GITHUB_WORKSPACE
+      
+      - name: Print TruffleHog Rules File
+        run: cat $GITHUB_WORKSPACE/trufflehog-rules.json
+
+
 
       - name: TruffleHog Scan
         run: |
