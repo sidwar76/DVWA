@@ -1,0 +1,31 @@
+name: TruffleHog Scan with regex
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  trufflehog_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: TruffleHog Scan
+        run: |
+          docker run --rm -v $GITHUB_WORKSPACE:/src trufflesecurity/trufflehog:latest /src --json \
+            --regex "(password|api_key|secret)" \
+            --regex "(access_key|private_key)" \
+            --regex "(db_username|db_password)" \
+            --file "\\.env" \
+            --file "config\\.json" \
+            > trufflehog-report.json
+
+      - name: Upload TruffleHog Scan Report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: trufflehog-scan-report
+          path: trufflehog-report.json
