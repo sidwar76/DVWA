@@ -12,3 +12,8 @@ tags = ["high_severity"]
 file = '\\.env|config\\.json'
 description = "Potential configuration files"
 tags = ["medium_severity"]
+
+[[rules]]
+file = 'false_report.txt'
+description = "Text file containing potential secrets"
+tags = ["medium_severity"]
