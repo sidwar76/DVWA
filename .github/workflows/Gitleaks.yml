@@ -20,6 +20,8 @@ jobs:
 
       - name: Debug
         run: ls /usr/local/bin/
+      - name: help
+        run: gitleaks --help
 
       - name: Run Gitleaks Scan
         run: |
@@ -49,7 +51,7 @@ jobs:
           echo "$CUSTOM_RULES" > custom-rules.json
 
           # Run Gitleaks scan with custom rules and the repository URL
-          gitleaks --config=custom-rules.json --report-path=gitleaks-report.json $REPO_URL
+          gitleaks --config=custom-rules.json --report-path=gitleaks-report.json 
 
       - name: Upload Gitleaks Scan Report
         if: always()
