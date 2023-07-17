@@ -86,7 +86,8 @@ jobs:
           python-version: '3.8.12'
  # Replace 'x' with the desired Python 3 version (e.g., 3.9)
       - name: Install TruffleHog
-        run: pip3 install truffleHog  # Install TruffleHog using pip
+        run: pip3 install truffleHog==2.1.0  # Install a specific version of TruffleHog using pip
+ # Install TruffleHog using pip
       - name: TruffleHog OSS
         run: trufflehog . --json --rules $GITHUB_WORKSPACE/rules.json 
 
