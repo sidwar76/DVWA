@@ -1,0 +1,14 @@
+[[rules]]
+regex = 'password|api_key|secret'
+description = "Potential sensitive information"
+tags = ["high_severity"]
+
+[[rules]]
+regex = 'access_key|private_key'
+description = "Potential access keys"
+tags = ["high_severity"]
+
+[[rules]]
+file = '\\.env|config\\.json'
+description = "Potential configuration files"
+tags = ["medium_severity"]
