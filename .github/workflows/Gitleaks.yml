@@ -51,7 +51,7 @@ jobs:
           echo "$CUSTOM_RULES" > custom-rules.json
 
           # Run Gitleaks scan with custom rules and the repository URL
-          gitleaks detect
+          gitleaks detect --config="${GITHUB_WORKSPACE}/gitleaks.toml"
           ls
 
       - name: Upload Gitleaks Scan Report
