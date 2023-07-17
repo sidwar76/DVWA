@@ -9,13 +9,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install Gitleaks
+      - name: Download Gitleaks Binary
         run: |
           wget https://github.com/gitleaks/gitleaks/releases/download/v8.17.0/gitleaks_8.17.0_linux_arm64.tar.gz
           tar -xzf gitleaks_8.17.0_linux_arm64.tar.gz
-          cd gitleaks_8.17.0_linux_arm64
-          chmod +x gitleaks
-          sudo mv gitleaks /usr/local/bin/
+
+      - name: Make Gitleaks Executable
+        run: chmod +x gitleaks_8.17.0_linux_arm64/gitleaks
+
+      - name: Move Gitleaks Binary to /usr/local/bin
+        run: sudo mv gitleaks_8.17.0_linux_arm64/gitleaks /usr/local/bin/
 
       - name: Debug
         run: ls /usr/local/bin/
@@ -56,5 +59,3 @@ jobs:
         with:
           name: gitleaks-scan-report
           path: gitleaks-report.json
-
-
