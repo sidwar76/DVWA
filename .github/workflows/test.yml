@@ -71,7 +71,8 @@ jobs:
           
       - name: Run TruffleHog and capture the output
         run: |
-          docker run -t -v $PWD:/src trufflesecurity/trufflehog https://github.com/sidwar76/DVWA.git --json --rules /src/rules.json
+          docker run -t -v $PWD:/src trufflesecurity/trufflehog /src --json --rules /src/rules.json https://github.com/sidwar76/DVWA.git
+
 
 
 
