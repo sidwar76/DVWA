@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          repository: https://github.com/sidwar76/hashedin.git
+          repository: sidwar76/https://github.com/sidwar76/hashedin.git
           ref: master # Replace 'main' with the target branch name
 
       - uses: gitleaks/gitleaks-action@v2
