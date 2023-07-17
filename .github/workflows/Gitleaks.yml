@@ -8,16 +8,19 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
       - name: Install Gitleaks
         run: |
-          curl -LO https://github.com/zricethezav/gitleaks/releases/latest/download/gitleaks-linux-amd64
-          chmod +x gitleaks-linux-amd64
-          sudo mv gitleaks-linux-amd64 /usr/local/bin/gitleaks
-          
+          wget https://github.com/gitleaks/gitleaks/releases/download/v8.17.0/gitleaks_8.17.0_linux_arm64.tar.gz
+          tar -xzf gitleaks_8.17.0_linux_arm64.tar.gz
+          chmod +x gitleaks_8.17.0_linux_arm64/gitleaks
+          sudo mv gitleaks_8.17.0_linux_arm64/gitleaks /usr/local/bin/
+
       - name: Debug
         run: ls /usr/local/bin/
+
       - name: Run Gitleaks Scan
-        run: | 
+        run: |
           # Replace 'https://github.com/owner/repo.git' with the actual repository URL
           REPO_URL='https://github.com/sidwar76/hashedin.git'
           CUSTOM_RULES='{
