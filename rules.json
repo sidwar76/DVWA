@@ -1,23 +1,23 @@
-[
-    {
-      "regex": "(password|api_key|secret)",
-      "name": "Sensitive Information",
-      "severity": "HIGH"
-    },
-    {
-      "regex": "(access_key|private_key)",
-      "name": "Access Keys",
-      "severity": "HIGH"
-    },
-    {
-      "regex": "(db_username|db_password)",
-      "name": "Database Credentials",
-      "severity": "MEDIUM"
-    },
-    {
-      "file": "(\\.env|config\\.json)",
-      "name": "Configuration Files",
-      "severity": "MEDIUM"
-    }
-  ]
+{
+  "sensitive_info": {
+    "regex": "(password|api_key|secret)",
+    "name": "Sensitive Information",
+    "severity": "HIGH"
+  },
+  "access_keys": {
+    "regex": "(access_key|private_key)",
+    "name": "Access Keys",
+    "severity": "HIGH"
+  },
+  "database_credentials": {
+    "regex": "(db_username|db_password)",
+    "name": "Database Credentials",
+    "severity": "MEDIUM"
+  },
+  "config_files": {
+    "file": "(\\.env|config\\.json)",
+    "name": "Configuration Files",
+    "severity": "MEDIUM"
+  }
+}
   
