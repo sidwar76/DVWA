@@ -51,7 +51,7 @@ jobs:
           echo "$CUSTOM_RULES" > custom-rules.json
 
           # Run Gitleaks scan with custom rules and the repository URL
-          gitleaks detect --config=custom-rules.json --report-path=/github/workspace/gitleaks-report.json -s "$REPO_URL"
+          gitleaks detect --config=custom-rules.json --report-path=/github/workspace/gitleaks-report.json
 
       - name: Upload Gitleaks Scan Report
         if: always()
