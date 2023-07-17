@@ -45,7 +45,7 @@ jobs:
 
       - name: TruffleHog Scan
         run: |
-          docker run --rm -v $GITHUB_WORKSPACE:/src trufflesecurity/trufflehog:latest /src --json --rules /src/trufflehog-rules.json /src
+          trufflesecurity/trufflehog:latest /github/workspace --json --rules /github/workspace/trufflehog-rules.json
 
       - name: Upload TruffleHog Scan Report
         if: always()
