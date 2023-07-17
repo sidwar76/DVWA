@@ -1,0 +1,33 @@
+name: TruffleHog Scan
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  trufflehog_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: TruffleHog Scan
+        uses: pluginfactory/trufflehog-actions-scan@v1
+        with:
+          max_depth: 10
+          no_entropy: false
+          no_regex: false
+          no_files: false
+          no_file_hashes: false
+          no_binary: true
+          path_to_scan: "."
+          custom_rules_file: "rules.json"  # Add this line to specify the rules file
+
+      - name: Upload TruffleHog Scan Report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: trufflehog-scan-report
+          path: trufflehog-report.json
