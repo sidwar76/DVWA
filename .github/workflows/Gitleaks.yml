@@ -15,7 +15,7 @@ jobs:
           sudo mv gitleaks-linux-amd64 /usr/local/bin/gitleaks
           
       - name: Debug
-        run: ls /usr/local/bin/gitleaks
+        run: ls /usr/local/bin/
       - name: Run Gitleaks Scan
         run: | 
           # Replace 'https://github.com/owner/repo.git' with the actual repository URL
