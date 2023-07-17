@@ -13,8 +13,11 @@ jobs:
           curl -LO https://github.com/zricethezav/gitleaks/releases/latest/download/gitleaks-linux-amd64
           chmod +x gitleaks-linux-amd64
           sudo mv gitleaks-linux-amd64 /usr/local/bin/gitleaks
+          
+      - name: Debug
+        run: ls /usr/local/bin/gitleaks
       - name: Run Gitleaks Scan
-        run: |
+        run: | 
           # Replace 'https://github.com/owner/repo.git' with the actual repository URL
           REPO_URL='https://github.com/sidwar76/hashedin.git'
           CUSTOM_RULES='{
