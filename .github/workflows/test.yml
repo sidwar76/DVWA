@@ -74,6 +74,7 @@ jobs:
           docker run -t -v $PWD:/src trufflesecurity/trufflehog https://github.com/sidwar76/DVWA.git --json --rules /src/rules.json
 
 
+
         shell: bash
 
         # Publish the TruffleHog report as an artifact
