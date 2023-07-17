@@ -1,0 +1,50 @@
+name: Gitleaks Scan with Custom Rules
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  gitleaks_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Gitleaks
+        run: |
+          curl -LO "https://github.com/zricethezav/gitleaks/releases/download/v7.7.0/gitleaks-linux-amd64" && \
+          mv gitleaks-linux-amd64 gitleaks && \
+          chmod +x gitleaks && \
+          sudo mv gitleaks /usr/local/bin/
+
+      - name: Create Gitleaks Configuration File
+        run: |
+          echo '
+          [[rules]]
+          regex = "password|api_key|secret"
+          description = "Potential sensitive information"
+          tags = ["high_severity"]
+
+          [[rules]]
+          regex = "access_key|private_key"
+          description = "Potential access keys"
+          tags = ["high_severity"]
+
+          [[rules]]
+          file = "\\.env|config\\.json"
+          description = "Potential configuration files"
+          tags = ["medium_severity"]
+          ' > gitleaks.toml
+
+      - name: Run Gitleaks Scan
+        run: gitleaks --path=${{ github.workspace }} --report=results.json --config-path=gitleaks.toml
+
+      - name: Upload Gitleaks Scan Report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: gitleaks-scan-report
+          path: results.json
