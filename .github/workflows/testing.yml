@@ -1,5 +1,4 @@
 name: TruffleHog Scan with regex
-
 on:
   push:
     branches:
@@ -10,12 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
       - name: TruffleHog Scan
         run: |
-          docker run --rm -v $GITHUB_WORKSPACE:/src trufflesecurity/trufflehog:latest /src --json \
+          docker run --rm trufflesecurity/trufflehog:latest https://github.com/sidwar76/hashedin.git --json \
             --regex "(password|api_key|secret)" \
             --regex "(access_key|private_key)" \
             --regex "(db_username|db_password)" \
@@ -29,3 +25,4 @@ jobs:
         with:
           name: trufflehog-scan-report
           path: trufflehog-report.json
+
