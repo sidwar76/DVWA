@@ -18,6 +18,8 @@ jobs:
             --file "\\.env" \
             --file "config\\.json" \
             https://github.com/sidwar76/DVWA.git > trufflehog-report.json
+        # Troubleshooting: Add the following line to print the exit code
+      - echo "TruffleHog exit code: $?"
 
       - name: Upload TruffleHog Scan Report
         if: always()
