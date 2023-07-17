@@ -58,7 +58,7 @@ jobs:
 
       - name: TruffleHog Scan
         run: |
-          trufflehog /github/workspace --json --rules $GITHUB_WORKSPACE/trufflehog-rules.json > trufflehog-report.json
+          trufflehog . --json 
 
       - name: Upload TruffleHog Scan Report
         if: always()
