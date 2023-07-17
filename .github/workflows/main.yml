@@ -13,8 +13,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install TruffleHog Docker image
-        run: docker pull trufflesecurity/trufflehog:latest
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install TruffleHog
+        run: pip install truffleHog
 
       - name: Create TruffleHog Rules File
         run: |
@@ -45,7 +50,7 @@ jobs:
 
       - name: TruffleHog Scan
         run: |
-          trufflesecurity/trufflehog:latest /github/workspace --json --rules /github/workspace/trufflehog-rules.json
+          trufflehog /github/workspace --json --rules /github/workspace/trufflehog-rules.json > trufflehog-report.json
 
       - name: Upload TruffleHog Scan Report
         if: always()
@@ -53,4 +58,5 @@ jobs:
         with:
           name: trufflehog-scan-report
           path: trufflehog-report.json
+
 
