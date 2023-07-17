@@ -11,8 +11,8 @@ jobs:
 
       - name: Download Gitleaks Binary
         run: |
-          wget https://github.com/gitleaks/gitleaks/releases/download/v8.17.0/gitleaks_8.17.0_linux_arm64.tar.gz
-          tar -xzf gitleaks_8.17.0_linux_arm64.tar.gz -C /tmp
+          wget https://github.com/gitleaks/gitleaks/releases/download/v8.17.0/gitleaks_8.17.0_linux_x64.tar.gz
+          tar -xzf gitleaks_8.17.0_linux_x64.tar.gz -C /tmp
           chmod +x /tmp/gitleaks
 
       - name: Move Gitleaks Binary to /usr/local/bin
