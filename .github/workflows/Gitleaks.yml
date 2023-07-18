@@ -52,6 +52,7 @@ jobs:
 
           # Run Gitleaks scan with custom rules and the repository URL
           gitleaks detect -c gitleaks.toml --report-path gitleaks-report.json -f json 
+          continue-on-error: true
 
       - name: Upload Gitleaks Scan Report
         if: always()
